@@ -1,13 +1,4 @@
-
-import org.knowm.xchart.*;
-import org.knowm.xchart.style.DialStyler;
-import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.markers.SeriesMarkers;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.management.MemoryUsage;
 import java.util.Scanner;
 
 public class main {
@@ -19,32 +10,48 @@ public class main {
         String name = input1.nextLine();
         System.out.println("Write the year of the race: ");
         int year = input1.nextInt();
-        System.out.println(year);
         System.out.println("Write the number of the race you want to check: ");
         int number_race = input1.nextInt();
-        System.out.println(number_race);*/
+        System.out.println("Set an average lap time: (time format in millisecond. Ex: 80000 for 1:20.000)");
+        int average_lap_time = input1.nextInt();*/
 
         double start = System.currentTimeMillis();
+        GetData data = GetData.get();
+        String json_data = data.getJsondata("http://ergast.com/api/f1/2020/12/drivers/hamilton/laps.json?limit=100");
 
-        GetData g = new GetData("hamilton",2012,3);
-        String driver = g.getJsondata();
+        //System.exit(0);
+        /*Drivers[] ffff = Drivers.getAllDriverfromYearandRound(2022,1);
+        Drivers[] eee = Drivers.getAllDriverfromYear(2022);
+        System.out.println(ffff.length);
+        for (int i = 0; i < ffff.length; i++) {
+            System.out.println(ffff[i].getDriverId());
+
+        }*/
+        Laps laps = new Laps();
+        double[] iii = laps.getLapsTime(2022,1,"leclerc");
+        for(int i=0; i<iii.length;i++){
+            System.out.println(iii[i]) ;
+        }
         //GetData g2 = new GetData("bottas",2020,12);
         //String driver2 = g2.getJsondata("http://ergast.com/api/f1/2020/12/results/1.json");
-        double[] lap_time = g.getLapsTime(driver);
+        double[] lap_time = data.getLapsTime(json_data);
         //System.out.println(hhh[0]);
         //int ppp=g.getTotalLaps(driver);
-        int record = g.getTotalRecords(driver);
+        int record = data.getTotalRecords(json_data);
         //int n_results = g2.getTotalLaps(driver2);
         int n_results = record;
 
-        double[] xData2 = new double[record];
+        double[] xData = new double[record];
         for (int i = 0; i < record; i++){
-            xData2[i]=i+1;
+            xData[i]=i+1;
         }
 
-        Chart d = new Chart();
-         //d.createChart(xData2,lap_time,record,n_results);
-         /*double[] yData2 = d.setYData(lap_time,83333);
+        //Chart d = new Chart(105000);
+        //d.createChart(xData,lap_time,record,n_results);
+
+
+         /*
+         double[] yData2 = d.setYData(lap_time,83333);
          for (int i = 0; i < 66;i++){
              System.out.println(yData2[i]);
          }*/
@@ -58,7 +65,10 @@ public class main {
         double end = System.currentTimeMillis();
         double dura = end - start;
         System.out.println("The program need " + dura + " milliseconds to run");
-
+        System.gc();
+        Runtime rt = Runtime.getRuntime();
+        long usedMemory = (rt.totalMemory() - rt.freeMemory());
+        System.out.println("The program toke " + usedMemory + " bytes of memory");
         // Show it
         //new SwingWrapper(chart).displayChart();
         /*
@@ -73,6 +83,5 @@ public class main {
         //g.getQualifyingData(g.getJsondata("http://ergast.com/api/f1/2008/drivers.json"));
 
     }
-
 
 }

@@ -7,6 +7,14 @@ import java.util.function.Function;
 
 public class Chart {
 
+    public static int average_lap;
+    public double max_y=0.0;
+    public double max_x=0.0;
+
+    public Chart(int average_lap){
+        this.average_lap=average_lap;
+    }
+
     public void createChart(double[] xdata, double[] ydata,int n_elements,int total_lap) {
 
         double[] x_data = new double[n_elements];
@@ -14,25 +22,34 @@ public class Chart {
             x_data[i]=i+1;
         }
         System.out.println(x_data.length);
-        double[] y_data = setYData(ydata,100000,n_elements,total_lap);
+        double[] y_data = setYData(ydata,average_lap,n_elements,total_lap);
         System.out.println(y_data.length);
 
         // Create Chart
         XYChart chart = QuickChart.getChart("Time Table", "Laps", "Time", "laps", x_data, y_data);
 
-        chart.getStyler().setyAxisTickLabelsFormattingFunction(YaxisTicks2()); //put label on tick axis
-        chart.getStyler().setYAxisMax(200000.0); //set max Y value
-        chart.getStyler().setYAxisMin(-120000.0); //set min Y value
-
+        chart.getStyler().setyAxisTickLabelsFormattingFunction(YaxisTicks()); //put label on tick axis
+        chart.getStyler().setYAxisMax(120000.0); //set max Y value
+        chart.getStyler().setYAxisMin(-100000.0); //set min Y value
 
         // Show it
         new SwingWrapper(chart).displayChart();
     }
 
-    private Function<Double,String> YaxisTicks2(){
+    private Function<Double,String> YaxisTicks(){
         Function<Double,String> funny = (b) -> {
 
-            if (b > 129999) {
+            if(b > 189999){
+
+                return "3:" + Math.round((b / 1000) - 180) + ".000";
+            }
+
+            if(b > 179999){
+
+                return "3:0" + Math.round((b / 1000) - 180) + ".000";
+
+            }
+            else if (b > 129999) {
 
                 return "2:" + Math.round((b / 1000) - 120) + ".000";
 
@@ -62,32 +79,47 @@ public class Chart {
 
             } else if (-59999 > b && b > -69999) {
 
-                return "-1:0" + Math.round(Math.abs(b / 1000) + 60) + ".000";
+                return "-1:0" + Math.round(Math.abs(b / 1000 ) - 60) + ".000";
 
-            } else if (-69999 > b) {
+            } else if (-69999 > b && b > -119999) {
 
-                return "-1:" + Math.round(Math.abs(b / 1000) + 60) + ".000";
-            } else {
+                return "-1:" + Math.round(Math.abs(b / 1000) - 60) + ".000";
+
+            } else if (-119999 > b && b > -129999){
+
+                return "-2:0" + Math.round(Math.abs(b / 1000) - 120) + ".000";
+
+            } else if (-129999 > b && b > -179999){
+
+                return "-2:" + Math.round(Math.abs(b / 1000) - 120) + ".000";
+
+            } else if (-179999 > b && b > -189999){
+
+                return "-3:0" + Math.round(Math.abs(b / 1000) - 180) + ".000";
+
+            } else if (b > -189999){
+
+                return "-3:" + Math.round(Math.abs(b / 1000) - 180) + ".000";
+
+            }
+            else {
 
                 return "0:0" + Math.round(Math.abs(b / 1000)) + ".000";
+
             }
         };
         return funny;
     }
 
-    public double[] setYData(double[] lapTimes,int set_time,int laps_number,int total_laps){
-        //int set_time = 83333;
-        int n_element = 66;
-        int total_element = 66;
+    public double[] setYData(double[] lapTimes,int average_lap,int laps_number,int total_laps){
+
         ArrayList<Double> Unit = new ArrayList<Double>();
         ArrayList<Double> Diff = new ArrayList<Double>();
         Unit.add(0.0);
 
 
         for (int i = 0; i < laps_number; i++){
-            double dif = set_time - lapTimes[i];
-            System.out.println("set_time: " + set_time +" lap: "+lapTimes[i]);
-            System.out.println(dif);
+            double dif = average_lap - lapTimes[i];
             Diff.add(dif);
         }
 
@@ -105,7 +137,6 @@ public class Chart {
         double[] xxx = new double[Unit.size()];
 
         for (int i = 0; i < Unit.size(); i++){
-            System.out.println(Unit.get(i));
             xxx[i] = Unit.get(i);
         }
 

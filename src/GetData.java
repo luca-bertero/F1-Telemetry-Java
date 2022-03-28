@@ -11,15 +11,19 @@ import java.util.HashMap;
 public class GetData {
 
     private String ergast_url = "";
-    private String driver;
-    private int year;
-    private int race_number;
+    private static GetData instance;
 
-    public GetData(String driver, int year, int race_number) {
-        this.driver = driver;
-        this.year = year;
-        this.race_number = race_number;
-        //this.ergast_url = "http://ergast.com/api/f1/"+this.year+"/"+this.race_number+"/drivers/"+this.driver+"/laps.json?limit=100";
+
+    private GetData() {
+
+    }
+
+
+    public static GetData get(){
+        if(GetData.instance == null){
+            GetData.instance = new GetData();
+        }
+        return GetData.instance;
     }
 
     public String getJsondata(String url) {
@@ -39,8 +43,8 @@ public class GetData {
             //System.out.print(rd.readLine());
             int a = 0;
             result = rd.readLine();
-            System.out.println(result);
-            System.out.println("miao");
+            //System.out.println(result);
+            //System.out.println("miao");
             //char c =(char)rd.read();
             /*while (rd.read() != 0) {
                  //c =rd.read();
@@ -62,58 +66,13 @@ public class GetData {
 
     }
 
-    public String getJsondata() {
-        ergast_url = "http://ergast.com/api/f1/"+this.year+"/"+this.race_number+"/drivers/"+this.driver+"/laps.json?limit=100";
-
-        StringBuilder sb = new StringBuilder();
-        String result = "";
-        try {
-            InputStream is = new URL(ergast_url).openStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-
-            result = rd.readLine();
-            System.out.println(result);
-            System.out.println("miao");
 
 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
-        return result;
-
-    }
-
-    public void test(String index) {
-        try {
-            JSONObject obj = new JSONObject(index);
-            JSONObject ciao = obj.getJSONObject("MRData");
-            JSONObject ciao2 = ciao.getJSONObject("RaceTable");
-            JSONArray ciao3 = ciao2.getJSONArray("Races");
-            for (int i = 0; i < ciao3.length(); i++) {
-                JSONObject b = ciao3.getJSONObject(i);
-                JSONArray ciao4 = b.getJSONArray("PitStops");
-                for (int j = 0; j < ciao4.length(); j++) {
-                    JSONObject c = ciao4.getJSONObject(j);
-                    String duration = c.getString("duration");
-                    String driverId = c.getString("driverId");
-                    System.out.println(driverId + ": " + duration);
-                }
-                String name = b.getString("date");
-                System.out.println(name);
-
-            }
-            System.out.println(ciao3.toString());
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
 
     public int getTotalLaps(String driver) {
-        String prov_url="http://ergast.com/api/f1/"+this.year+"/"+this.race_number+"/results/1.json";
-        String prov_json=getJsondata(prov_url);
+        //String prov_url="http://ergast.com/api/f1/"+this.year+"/"+this.race_number+"/results/1.json";
+        //String prov_json=getJsondata(prov_url);
         int n_results=0;
         String total_lap = "";
         try {
@@ -141,11 +100,11 @@ public class GetData {
         return n_results;
     }
 
-    public int getTotalRecords(String driver) {
+    public int getTotalRecords(String data_json) {
         int n_results=0;
         try {
 
-            JSONObject obj = new JSONObject(driver);
+            JSONObject obj = new JSONObject(data_json);
             JSONObject objMRData = obj.getJSONObject("MRData");
             String total_result = objMRData.getString("total");
             n_results=Integer.parseInt(total_result);
@@ -319,7 +278,6 @@ public class GetData {
                 System.out.println(position + ": " + Drivername + " " + date + " " + time + " " + Code + " " + q1 + " " + q2 + " " + q3);
             }
             String xlm = objMRData.getString("xmlns");
-            System.out.println(obj);
 
         } catch (Exception e) {
             System.out.println(e);
