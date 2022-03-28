@@ -13,6 +13,14 @@ Java App for view Formula 1 chart and telemetry
 ./java -jar F1-Telemetry.jar
 ```
 
+If you want to compile the code from the source you need this 2 external library
+Json library
+https://mvnrepository.com/artifact/org.json/json
+Chart library
+https://knowm.org/open-source/xchart/
+
+
+
 ## Usage
 You can view the lap time chart iserting the name driver, the year of the race and the number of the race that you want to check
 
