@@ -10,12 +10,13 @@ Java App for view Formula 1 chart and telemetry
 3. Run the program by typing:
 
 ```bash
-./java -jar F1-Telemetry.jar
+./java -jar F1-telemetry.jar
 ```
 
 If you want to compile the code from the source you need this 2 external library
 Json library
 https://mvnrepository.com/artifact/org.json/json
+
 Chart library
 https://knowm.org/open-source/xchart/
 
