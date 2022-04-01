@@ -1,9 +1,12 @@
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
@@ -26,16 +29,18 @@ public class GetData {
         return GetData.instance;
     }
 
-    public String getJsondata(String url) {
+    public String getJsondata(String url){
 
         StringBuilder sb = new StringBuilder();
         String result = "";
         //StringBuilder sbt = new StringBuilder();
+        InputStream is = null;
+        BufferedReader rd = null;
         try {
 
             //URL connection = new URL(url);
-            InputStream is = new URL(url).openStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            is = new URL(url).openStream();
+            rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             //System.out.print(is.available());
 
             //metodo alternativo
@@ -54,15 +59,36 @@ public class GetData {
                 a++;
             }
             rd.close();*/
+            return result;
 
-        } catch (Exception e) {
-            System.out.println(e);
+
+        } catch(UnknownHostException e){
+            System.out.println("Connection failure: " + e);
+            System.exit(1);
         }
+        catch(IOException e){
+            System.out.println("Bad Request " + e);
+            System.exit(1);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.exit(1);
+        }
+        finally{
+            if (is != null && rd != null) {
+                try {
+                    rd.close();
+                    is.close();
+                } catch (IOException err) {
+                    System.out.println(err);
+                }
+            }
 
-        return result;
+        }
 
         //String b = sb.toString();
         //System.out.println(b);
+        return null;
 
     }
 
@@ -70,14 +96,14 @@ public class GetData {
 
 
 
-    public int getTotalLaps(String driver) {
+    public int getTotalLaps(String json_data) {
         //String prov_url="http://ergast.com/api/f1/"+this.year+"/"+this.race_number+"/results/1.json";
         //String prov_json=getJsondata(prov_url);
         int n_results=0;
         String total_lap = "";
         try {
 
-            JSONObject obj = new JSONObject(driver);
+            JSONObject obj = new JSONObject(json_data);
             JSONObject objMRData = obj.getJSONObject("MRData");
             JSONObject objLapsTable = objMRData.getJSONObject("RaceTable");
             JSONArray arrayRace = objLapsTable.getJSONArray("Races");
@@ -109,7 +135,10 @@ public class GetData {
             String total_result = objMRData.getString("total");
             n_results=Integer.parseInt(total_result);
 
-        } catch (Exception e) {
+        } catch (JSONException e) {
+            System.out.println("No valid Json "+e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
         return n_results;
@@ -155,7 +184,10 @@ public class GetData {
             String xlm = objMRData.getString("xmlns");
             //System.out.println(obj);
 
-        } catch (Exception e) {
+        } catch (JSONException e){
+            System.out.println(e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
         return driver_info;

@@ -1,23 +1,24 @@
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 
 public class Drivers {
 
-    public String driverId;
-    public String permanentNumber;
-    public String code;
-    public String url;
-    public String givenName;
-    public String familyName;
-    public String dateOfBirth;
-    public String nationality;
+    private String driverId;
+    private String permanentNumber;
+    private String code;
+    private String url;
+    private String givenName;
+    private String familyName;
+    private String dateOfBirth;
+    private String nationality;
 
     public Drivers(){
 
     }
 
-    public Drivers(int year){
+    /*public Drivers(int year){
         GetData data = GetData.get();
 
         String ergast_url="https://ergast.com/api/f1/"+year+"/drivers.json";
@@ -54,11 +55,14 @@ public class Drivers {
             String xlm = objMRData.getString("xmlns");
             //System.out.println(obj);
 
-        } catch (Exception e) {
+        } catch (JSONException e){
+            System.out.println("Not valid Json " + e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
 
-    }
+    }*/
 
     public HashMap<String, HashMap<String, String>> getDataDriver(String Json_data) {
         HashMap<String, HashMap<String,String>> driver_info = new HashMap<String, HashMap<String, String>>();
@@ -95,12 +99,12 @@ public class Drivers {
                 driver_info.put(driverId,inner_driver_info);
                 System.out.println("cioa "+ driver_info);
 
-                System.out.println(driverId + ": " + permanentNumber + " " + code + " " + nationality + " " + givenName + " " + familyName + " " + dateOfBirth + " " + url);
             }
-            String xlm = objMRData.getString("xmlns");
-            //System.out.println(obj);
 
-        } catch (Exception e) {
+        } catch (JSONException e){
+            System.out.println("Not valid Json " + e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
         return driver_info;
@@ -145,16 +149,18 @@ public class Drivers {
                 single_driver.dateOfBirth = objDriver.getString("dateOfBirth");
                 single_driver.url = objDriver.getString("url");
 
-                //System.out.println(single_driver.driverId + ": " + single_driver.permanentNumber + " " + single_driver.code + " " + single_driver.nationality + " " + single_driver.givenName + " " + single_driver.familyName + " " + single_driver.dateOfBirth + " " + single_driver.url);
                 Driver_array[i]=single_driver;
             }
-            String xlm = objMRData.getString("xmlns");
-            //System.out.println(obj);
 
-        } catch (Exception e) {
+            return Driver_array;
+
+        } catch (JSONException e){
+            System.out.println("Not valid Json " + e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
-        return Driver_array;
+        return null;
     }
 
     public static Drivers[] getAllDriverfromYearandRound(int year,int round){
@@ -196,13 +202,13 @@ public class Drivers {
                 single_driver.dateOfBirth = objDriver.getString("dateOfBirth");
                 single_driver.url = objDriver.getString("url");
 
-                //System.out.println(single_driver.driverId + ": " + single_driver.permanentNumber + " " + single_driver.code + " " + single_driver.nationality + " " + single_driver.givenName + " " + single_driver.familyName + " " + single_driver.dateOfBirth + " " + single_driver.url);
                 Driver_array[i]=single_driver;
             }
-            String xlm = objMRData.getString("xmlns");
-            //System.out.println(obj);
 
-        } catch (Exception e) {
+        } catch (JSONException e){
+            System.out.println("Not valid Json " + e);
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
         return Driver_array;
