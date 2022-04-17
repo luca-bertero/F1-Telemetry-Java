@@ -23,7 +23,7 @@ https://knowm.org/open-source/xchart/
 
 
 ## Usage
-You can view the lap time chart iserting the name driver, the year of the race and the number of the race that you want to check
+You can view the lap time chart inserting the year of the race, the number of the race and the driver you want 
 
 ```
 Write the year of the race: 2022
