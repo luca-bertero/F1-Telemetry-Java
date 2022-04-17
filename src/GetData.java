@@ -29,9 +29,9 @@ public class GetData {
         return GetData.instance;
     }
 
-    public String getJsondata(String url){
+    public static String getJsondata(String url){
 
-        StringBuilder sb = new StringBuilder();
+        //StringBuilder sb = new StringBuilder();
         String result = "";
         //StringBuilder sbt = new StringBuilder();
         InputStream is = null;
@@ -126,7 +126,7 @@ public class GetData {
         return n_results;
     }
 
-    public int getTotalRecords(String data_json) {
+    public static int getTotalRecords(String data_json) {
         int n_results=0;
         try {
 
@@ -144,54 +144,6 @@ public class GetData {
         return n_results;
     }
 
-    public HashMap<String, HashMap<String, String>> getDataDriver(String Driver) {
-        HashMap<String, HashMap<String,String>> driver_info = new HashMap<String, HashMap<String, String>>();
-        HashMap<String, String> inner_driver_info = new HashMap<String, String>();
-        try {
-
-            JSONObject obj = new JSONObject(Driver);
-            JSONObject objMRData = obj.getJSONObject("MRData");
-            JSONObject objDriverTable = objMRData.getJSONObject("DriverTable");
-            JSONArray arrayDriver = objDriverTable.getJSONArray("Drivers");
-            for (int i = 0; i < arrayDriver.length(); i++) {
-                JSONObject objDriver = arrayDriver.getJSONObject(i);
-                String driverId = objDriver.getString("driverId");
-                String code = "";
-                String permanentNumber = "";
-                if (!objDriver.isNull("code")) {
-                    code = objDriver.getString("code");
-                }
-                if (!objDriver.isNull("permanentNumber")) {
-                    permanentNumber = objDriver.getString("permanentNumber");
-
-                }
-
-                String nationality = objDriver.getString("nationality");
-                String givenName = objDriver.getString("givenName");
-                String familyName = objDriver.getString("familyName");
-                String dateOfBirth = objDriver.getString("dateOfBirth");
-                String url = objDriver.getString("url");
-                inner_driver_info.put("nationality",nationality);
-                inner_driver_info.put("givenName",givenName);
-                inner_driver_info.put("familyName",familyName);
-                inner_driver_info.put("dateOfBirth",dateOfBirth);
-                inner_driver_info.put("url",url);
-                driver_info.put(driverId,inner_driver_info);
-                System.out.println("cioa "+ driver_info);
-
-                System.out.println(driverId + ": " + permanentNumber + " " + code + " " + nationality + " " + givenName + " " + familyName + " " + dateOfBirth + " " + url);
-            }
-            String xlm = objMRData.getString("xmlns");
-            //System.out.println(obj);
-
-        } catch (JSONException e){
-            System.out.println(e);
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-        return driver_info;
-    }
 
     public void getConstructorData(String Constructor) {
 

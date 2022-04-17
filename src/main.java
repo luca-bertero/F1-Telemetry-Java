@@ -12,13 +12,16 @@ public class main {
         calendar.setTime(date);
         //System.out.println(calendar.get(Calendar.YEAR));
         Scanner input1 = new Scanner(System.in);
-        int year=0;
-        int number_race=0;
-        int name_number=0;
+        // the possible year value are between 1950 and 2022
+        short year=0;
+        // possible number_race is around 20
+        byte number_race=0;
+        // possible name_number is around 22
+        byte name_number=0;
         try {
 
             System.out.println("Write the year of the race: ");
-            year = input1.nextInt();
+            year = input1.nextShort();
 
             //s= new Scanner(System.in);
             //int scelta = s.nextInt();
@@ -26,7 +29,7 @@ public class main {
             {
                 System.out.println("Il numero selezionato non è nel range 1950 e "  + calendar.get(Calendar.YEAR)+"\n"+
                         "inseriscine un altro:");
-                year = input1.nextInt();
+                year = input1.nextShort();
             }
 
         }catch(InputMismatchException e){
@@ -41,9 +44,16 @@ public class main {
             System.exit(1);
         }
 
+        Rounds[] rounds = Rounds.getRoundofYear(year);
+
         try {
             System.out.println("Write the number of the race you want to check: ");
-            number_race = input1.nextInt();
+            if(rounds.length != 0) {
+                for (int i = 0; i < rounds.length; i++) {
+                    System.out.println(i + 1 + ". " + rounds[i].getRaceName());
+                }
+            }
+            number_race = input1.nextByte();
         }catch(InputMismatchException e){
             System.out.println("The input is not a number");
             System.out.println(e);
@@ -83,7 +93,7 @@ public class main {
         try {
             System.out.println("Select the number of the driver you want to search: ");
 
-            name_number = input1.nextInt();
+            name_number = input1.nextByte();
         }catch(InputMismatchException e){
             System.out.println("The input is not a number");
             System.out.println(e);
@@ -125,9 +135,9 @@ public class main {
         }*/
         Laps laps = new Laps();
         double[] lap_time_race = laps.getLapsTime(year,number_race,drivers[name_number-1].getDriverId());
-        int total_lap_race = laps.getTotalLaps(year,number_race);
+        byte total_lap_race = laps.getTotalLaps(year,number_race);
        // double[] www = laps.getLapsTime(1998,4,"hakkinen");
-        int lap_driven = laps.getLapsDriven();
+        byte lap_driven = laps.getLapsDriven();
 
         //for(int i=0; i<iii.length;i++){
         //    System.out.println(iii[i]) ;

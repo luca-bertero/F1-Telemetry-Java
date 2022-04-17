@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Laps {
 
-    private int lap_driven=0;
-    private int lap_number;
+    private byte lap_driven=0;
+    private byte lap_number;
     private double[] lap_time_race;
     //public ArrayList<Integer> giro = new ArrayList<Integer>();
 
@@ -15,7 +15,7 @@ public class Laps {
 
     }
 
-    public double[] getLapsTime(int year,int round,String driver) {
+    public double[] getLapsTime(short year,byte round,String driver) {
         String time="";
         GetData data = GetData.get();
 
@@ -27,7 +27,7 @@ public class Laps {
         try {
             JSONObject obj = new JSONObject(data_json);
             JSONObject objMRData = obj.getJSONObject("MRData");
-            lap_driven = Integer.parseInt(objMRData.getString("total"));
+            lap_driven = Byte.parseByte(objMRData.getString("total"));
             JSONObject objRaceTable = objMRData.getJSONObject("RaceTable");
             JSONArray arrayLapsResults = objRaceTable.getJSONArray("Races");
             for (int i = 0; i < arrayLapsResults.length(); i++) {
@@ -35,7 +35,7 @@ public class Laps {
                 JSONArray laps = objLapsResults.getJSONArray("Laps");
                 for (int j = 0; j < laps.length(); j++) {
                     JSONObject objLaps = laps.getJSONObject(j);
-                    lap_number = Integer.parseInt(objLaps.getString("number"));
+                    lap_number = Byte.parseByte(objLaps.getString("number"));
                     JSONArray Timings = objLaps.getJSONArray("Timings");
                     for (int k = 0; k < Timings.length(); k++){
                         JSONObject objTimingsResults = Timings.getJSONObject(k);
@@ -71,10 +71,10 @@ public class Laps {
 
     }
 
-    public int getTotalLaps(int year,int race_number) {
+    public byte getTotalLaps(short year,byte race_number) {
         String url="http://ergast.com/api/f1/"+year+"/"+race_number+"/results/1.json";
-        String json_data=GetData.get().getJsondata(url);
-        int n_results=0;
+        String json_data=GetData.getJsondata(url);
+        byte n_results=0;
         String total_lap = "";
         try {
 
@@ -90,7 +90,7 @@ public class Laps {
                     total_lap = objLapsTotal.getString("laps");
                 }
             }
-            n_results=Integer.parseInt(total_lap);
+            n_results=Byte.parseByte(total_lap);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -100,12 +100,12 @@ public class Laps {
         return n_results;
     }
 
-    public int getLapsDriven() {
+    public byte getLapsDriven() {
         return lap_driven;
     }
 
 
-    public int getLapNumber(){
+    public byte getLapNumber(){
         return lap_number;
     }
 
