@@ -1,14 +1,26 @@
-import View.UserInterface;
+package View;
+
+import Controller.DriverController;
+import Controller.LapController;
+import Controller.RoundController;
+import Model.Driver;
+import Model.Round;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class main {
+public class UserInterface {
 
-    public static void main(String[] args) {
-/*
+    private DriverController drivers;
+    private RoundController rounds;
+    public UserInterface(){
+        drivers = new DriverController();
+        rounds = new RoundController();
+    }
+
+    public void start(){
         Date date = new Date();// the date instance
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -46,13 +58,14 @@ public class main {
             System.exit(1);
         }
 
-        Rounds[] rounds = Rounds.getRoundofYear(year);
+        Round[] rounds_list = rounds.getRoundofYear(year);
+
 
         try {
             System.out.println("Write the number of the race you want to check: ");
-            if(rounds.length != 0) {
-                for (int i = 0; i < rounds.length; i++) {
-                    System.out.println(i + 1 + ". " + rounds[i].getRaceName());
+            if(rounds_list.length != 0) {
+                for (int i = 0; i < rounds_list.length; i++) {
+                    System.out.println(i + 1 + ". " + rounds_list[i].getRaceName());
                 }
             }
             number_race = input1.nextByte();
@@ -66,15 +79,16 @@ public class main {
             input1.close();
             System.exit(1);
         }
-        Drivers[] drivers = Drivers.getAllDriverfromYearandRound(year, number_race);
+        Driver[] drivers_list = drivers.getAllDriverfromYearandRound(year, number_race);
         try {
-            if(drivers.length != 0) {
-                for (int i = 0; i < drivers.length; i++) {
-                    System.out.println(i + 1 + ". " + drivers[i].getDriverId());
+            if(drivers_list.length != 0) {
+                for (int i = 0; i < drivers_list.length; i++) {
+                    System.out.println(i + 1 + ". " + drivers_list[i].getDriverId());
                 }
             }
             else{
                 input1.close();
+                //throw if the array is empty
                 throw new NullPointerException();
             }
         }catch(Exception e){
@@ -90,7 +104,7 @@ public class main {
         }
         else{
             throw new NullPointerException();
-        }
+        }*/
 
         try {
             System.out.println("Select the number of the driver you want to search: ");
@@ -108,39 +122,14 @@ public class main {
         }
 
 
-        input1.close();*/
-        UserInterface menu = new UserInterface();
-        menu.start();
+        input1.close();
 
-        /*System.out.println("Write the year of the race: ");
-        int year = input1.nextInt();
-        System.out.println("Write the number of the race you want to check: ");
-        int number_race = input1.nextInt();*/
-/*
-        Drivers[] drivers = Drivers.getAllDriverfromYearandRound(year,number_race);
-        for (int i = 0; i <drivers.length; i++) {
-            System.out.println(i+1 +". "+drivers[i].getDriverId());
-        }
+        double start = System.currentTimeMillis();
 
-        System.out.println("Select the number of the driver you want to search: ");
-
-        int name_number = input1.nextInt();*/
-
-
-        //String json_data = data.getJsondata("http://ergast.com/api/f1/2020/12/drivers/hamilton/laps.json?limit=100");
-
-        //System.exit(0);
-        /*Drivers[] ffff = Drivers.getAllDriverfromYearandRound(2022,1);
-        Drivers[] eee = Drivers.getAllDriverfromYear(2022);
-        System.out.println(ffff.length);
-        for (int i = 0; i < ffff.length; i++) {
-            System.out.println(ffff[i].getDriverId());
-
-        }*/
-       /* Laps laps = new Laps();
-        double[] lap_time_race = laps.getLapsTime(year,number_race,drivers[name_number-1].getDriverId());
+        LapController laps = new LapController();
+        double[] lap_time_race = laps.getLapsTime(year,number_race,drivers_list[name_number-1].getDriverId());
         byte total_lap_race = laps.getTotalLaps(year,number_race);
-       // double[] www = laps.getLapsTime(1998,4,"hakkinen");
+        // double[] www = laps.getLapsTime(1998,4,"hakkinen");
         byte lap_driven = laps.getLapsDriven();
 
         //for(int i=0; i<iii.length;i++){
@@ -148,32 +137,10 @@ public class main {
         //}
 
         Chart d = new Chart();
-        d.createChart(lap_time_race,lap_driven,total_lap_race);*/
+        d.createChart(lap_time_race,lap_driven,total_lap_race);
 
-        // Create Chart
-        //XYChart chart = QuickChart.getChart("Time Table", "Laps", "Time", "laps", xData2, xxx);
-
-        //chart.getStyler().setyAxisTickLabelsFormattingFunction(funny); //put label on tick axis
-        //chart.getStyler().setYAxisMax(120000.0); //set max Y value
-        //chart.getStyler().setYAxisMin(0000.0); //set min Y value
-
-        System.gc();
-        Runtime rt = Runtime.getRuntime();
-        long usedMemory = (rt.totalMemory() - rt.freeMemory());
-        System.out.println("The program toke " + usedMemory + " bytes of memory");
-        // Show it
-        //new SwingWrapper(chart).displayChart();
-        /*
-        JFrame frame = new JFrame();
-        frame.setSize(420,420);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        */
-        //UrlGenerator prova = new UrlGenerator();
-        //System.out.println(prova.getYearConstructor(2022));
-        //g.getLapsTime(driver);
-        //g.getQualifyingData(g.getJsondata("http://ergast.com/api/f1/2008/drivers.json"));
-
+        double end = System.currentTimeMillis();
+        double duration_time = end - start;
+        System.out.println("The program need " + duration_time + " milliseconds to run");
     }
-
 }
