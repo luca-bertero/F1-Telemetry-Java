@@ -1,7 +1,10 @@
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class Chart {
@@ -9,9 +12,10 @@ public class Chart {
     public static int average_lap;
     public double max_y=0.0;
     public double max_x=0.0;
+    private String[] seriesName;
 
     public Chart(){
-
+        
     }
 
     public void createChart(double[] ydata,int n_elements,int total_lap) {
@@ -26,24 +30,88 @@ public class Chart {
         double med_lap = average_lap_time(ydata);
         int med_lap_int=(int)med_lap;
 
-        double[] y_data = setYData(ydata,med_lap_int,n_elements,total_lap);
+        double[] y_data_chart = setYData(ydata,med_lap_int,n_elements,total_lap);
         //System.out.println("ccc "+y_data.length);
         //System.out.println("ccc2 "+x_data.length);
-        double max_y_value_double = maxYValue(y_data);
-        double min_y_value_double = minYValue(y_data);
+        double max_y_value_double = maxYValue(y_data_chart);
+        double min_y_value_double = minYValue(y_data_chart);
         double max_y_value_formatted=Math.round(max_y_value_double/1000)*1000;
         double min_y_value_formatted=Math.round(min_y_value_double/1000)*1000;
 
         // Create Chart
-        XYChart chart = QuickChart.getChart("Time Table", "Laps", "Time", "laps", x_data, y_data);
+        XYChart chart = QuickChart.getChart("Time Table", "Laps", "Time", "laps", x_data, y_data_chart);
 
         chart.getStyler().setyAxisTickLabelsFormattingFunction(YaxisTicks()); //put label on tick axis
         chart.getStyler().setYAxisMax(max_y_value_formatted); //set max Y value
         chart.getStyler().setYAxisMin(min_y_value_formatted); //set min Y value
 
         // Show it
-        new SwingWrapper(chart).displayChart();
+        new SwingWrapper<XYChart>(chart).displayChart();
     }
+
+
+    public void MultipleChart(List<double[]> ydata,int n_elements,int total_lap){
+       
+        seriesName = new String[ydata.size()];
+        for(int i = 0 ; i < ydata.size(); i++)
+        {
+            seriesName[i] = i + 1 + "° driver";
+        }
+       
+        double[] x_data = new double[total_lap];
+        for (int i = 0; i < total_lap; i++){
+            x_data[i] = i + 1;
+
+        }
+        //System.out.println(n_elements);
+        //System.out.println(total_lap);
+        List<double[]> y_formatted = new ArrayList<double[]>();
+        double med_lap = average_lap_time(ydata.get(0));
+        int med_lap_int=(int)med_lap;
+       
+        for(int i=0; i < ydata.size(); i++){
+            y_formatted.add(setYData(ydata.get(i),med_lap_int,n_elements,total_lap));
+        }
+
+        //double[] y_data_chart = setYData(ydata,med_lap_int,n_elements,total_lap);
+        //System.out.println("ccc "+y_data.length);
+        //System.out.println("ccc2 "+x_data.length);
+        double y_max=0;
+        double y_min=0;
+        for (int i = 0; i < y_formatted.size(); i++){
+            if(y_max < maxYValue(y_formatted.get(i)))
+            {
+                y_max=maxYValue(y_formatted.get(i));
+                
+            }
+
+            if(y_min > minYValue(y_formatted.get(i)))
+            {
+                y_min=minYValue(y_formatted.get(i));
+            }
+        }
+        double max_y_value_double = y_max;
+        double min_y_value_double = y_min;
+
+        double max_y_value_formatted=Math.round(max_y_value_double/1000)*1000;
+        double min_y_value_formatted=Math.round(min_y_value_double/1000)*1000;
+
+        // Create Chart
+        XYChart chart = new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("Laps").yAxisTitle("Time").build();
+
+        chart.getStyler().setyAxisTickLabelsFormattingFunction(YaxisTicks()); //put label on tick axis
+        chart.getStyler().setYAxisMax(max_y_value_formatted); //set max Y value
+        chart.getStyler().setYAxisMin(min_y_value_formatted); //set min Y value
+
+        for(int i = 0; i < y_formatted.size(); i++) {
+            chart.addSeries(seriesName[i], y_formatted.get(i));
+
+        }
+        // Show it
+        new SwingWrapper<XYChart>(chart).displayChart();
+    }
+
+
 
     private Function<Double,String> YaxisTicks(){
         Function<Double,String> funny = (b) -> {

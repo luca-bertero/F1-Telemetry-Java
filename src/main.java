@@ -1,12 +1,15 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
 
     public static void main(String[] args) {
 
+        /* 
         Date date = new Date();// the date instance
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -88,7 +91,7 @@ public class main {
         }
         else{
             throw new NullPointerException();
-        }*/
+        }
 
         try {
             System.out.println("Select the number of the driver you want to search: ");
@@ -106,7 +109,7 @@ public class main {
         }
 
 
-        input1.close();
+        input1.close(); */
 
         /*System.out.println("Write the year of the race: ");
         int year = input1.nextInt();
@@ -134,8 +137,8 @@ public class main {
 
         }*/
         Laps laps = new Laps();
-        double[] lap_time_race = laps.getLapsTime(year,number_race,drivers[name_number-1].getDriverId());
-        byte total_lap_race = laps.getTotalLaps(year,number_race);
+        double[] lap_time_race = laps.getLapsTime((short)2021,(byte)1,"hamilton");
+        byte total_lap_race = laps.getTotalLaps((short)2021,(byte)1);
        // double[] www = laps.getLapsTime(1998,4,"hakkinen");
         byte lap_driven = laps.getLapsDriven();
 
@@ -146,6 +149,22 @@ public class main {
         Chart d = new Chart();
         d.createChart(lap_time_race,lap_driven,total_lap_race);
 
+
+        Laps laps22 = new Laps();
+        double[] lap_time_race22 = laps22.getLapsTime((short)2021,(byte)1,"vettel");
+        byte total_lap_race22 = laps22.getTotalLaps((short)2021,(byte)1);
+       // double[] www = laps.getLapsTime(1998,4,"hakkinen");
+        byte lap_driven22 = laps22.getLapsDriven();
+        
+        List<double[]> lapsss = new ArrayList<double[]>();    
+        lapsss.add(lap_time_race);
+        lapsss.add(lap_time_race22);
+        
+        Chart dd = new Chart();
+        dd.MultipleChart(lapsss, lap_driven22, total_lap_race22);
+
+        Chart d2 = new Chart();
+        //d.createChart(lap_time_race22,lap_driven22,total_lap_race22);
         // Create Chart
         //XYChart chart = QuickChart.getChart("Time Table", "Laps", "Time", "laps", xData2, xxx);
 
