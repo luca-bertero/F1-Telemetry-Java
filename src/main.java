@@ -139,26 +139,27 @@ public class main {
         Laps laps = new Laps();
         double[] lap_time_race = laps.getLapsTime((short)2021,(byte)1,"hamilton");
         byte total_lap_race = laps.getTotalLaps((short)2021,(byte)1);
-       // double[] www = laps.getLapsTime(1998,4,"hakkinen");
         byte lap_driven = laps.getLapsDriven();
-
-        //for(int i=0; i<iii.length;i++){
-        //    System.out.println(iii[i]) ;
-        //}
 
         Chart d = new Chart();
         d.createChart(lap_time_race,lap_driven,total_lap_race);
 
-
         Laps laps22 = new Laps();
         double[] lap_time_race22 = laps22.getLapsTime((short)2021,(byte)1,"vettel");
         byte total_lap_race22 = laps22.getTotalLaps((short)2021,(byte)1);
-       // double[] www = laps.getLapsTime(1998,4,"hakkinen");
         byte lap_driven22 = laps22.getLapsDriven();
         
+
+        Laps laps33 = new Laps();
+        double[] lap_time_race33 = laps33.getLapsTime((short)2021,(byte)1,"leclerc");
+        byte total_lap_race33 = laps33.getTotalLaps((short)2021,(byte)1);
+        byte lap_driven33 = laps33.getLapsDriven();
+
+
         List<double[]> lapsss = new ArrayList<double[]>();    
         lapsss.add(lap_time_race);
         lapsss.add(lap_time_race22);
+        lapsss.add(lap_time_race33);
         
         Chart dd = new Chart();
         dd.MultipleChart(lapsss, lap_driven22, total_lap_race22);
