@@ -1,10 +1,5 @@
 package Model;
 
-import DataAcquisition.GetData;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Lap {
 
     private byte lap_driven=0;

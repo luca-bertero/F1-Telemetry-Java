@@ -1,10 +1,5 @@
 package Model;
 
-import DataAcquisition.GetData;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Driver {
 
     private String driverId;
@@ -19,7 +14,6 @@ public class Driver {
     public Driver(){
 
     }
-
 
 
 

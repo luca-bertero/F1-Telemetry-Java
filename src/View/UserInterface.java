@@ -143,4 +143,16 @@ public class UserInterface {
         double duration_time = end - start;
         System.out.println("The program need " + duration_time + " milliseconds to run");
     }
+
+
+    public boolean CheckInputInt(){
+
+        Scanner s = new Scanner(System.in);
+        s.hasNextInt();
+        int input = s.nextInt();
+        if(s.hasNextInt()){
+
+        }
+        return true;
+    }
 }
