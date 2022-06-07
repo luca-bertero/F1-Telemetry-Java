@@ -115,4 +115,8 @@ public class DriverController {
         }
         return null;
     }
+
+    public void SetDriverId(String driverId){
+        this.driver.setDriverId(driverId);
+    }
 }

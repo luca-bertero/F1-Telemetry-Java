@@ -1,5 +1,10 @@
 package Model;
 
+import DataAcquisition.GetData;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Driver {
 
     private String driverId;
@@ -10,12 +15,15 @@ public class Driver {
     private String familyName;
     private String dateOfBirth;
     private String nationality;
+    private Lap laps;
 
     public Driver(){
 
     }
 
-
+    public Driver(String driverid){
+        this.driverId = driverid;
+    }
 
     public void setDriverId(String driverId){
         this.driverId = driverId;
