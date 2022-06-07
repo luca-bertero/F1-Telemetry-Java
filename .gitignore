@@ -2,3 +2,6 @@ json-20201115.jar
 xchart-3.8.1.jar
 .vscode
 out
+.idea
+Json.iml
+
