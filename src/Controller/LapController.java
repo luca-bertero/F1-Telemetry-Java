@@ -19,7 +19,7 @@ public class LapController {
         String data_json=GetData.getJsondata(ergast_url);
         int total = GetData.getTotalRecords(data_json);
 
-        laps.setLapTimeRace(new double[total]);
+        laps.setLapTimeRace(new double[total]); //initialize an empty array with total laps lenght
         try {
             JSONObject obj = new JSONObject(data_json);
             JSONObject objMRData = obj.getJSONObject("MRData");

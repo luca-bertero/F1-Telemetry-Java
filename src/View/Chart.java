@@ -3,7 +3,6 @@ package View;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
-
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -46,7 +45,7 @@ public class Chart {
         chart.getStyler().setYAxisMin(min_y_value_formatted); //set min Y value
 
         // Show it
-        new SwingWrapper(chart).displayChart();
+        new SwingWrapper<XYChart>(chart).displayChart();
     }
 
     private Function<Double,String> YaxisTicks(){

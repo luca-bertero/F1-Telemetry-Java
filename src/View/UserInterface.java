@@ -2,6 +2,7 @@ package View;
 
 import Controller.DriverController;
 import Controller.LapController;
+import Controller.MainController;
 import Controller.RoundController;
 import Model.Driver;
 import Model.Round;
@@ -14,10 +15,12 @@ import java.util.Scanner;
 public class UserInterface {
 
     private DriverController drivers;
-    private RoundController rounds;
+    private RoundController roundsController;
+    private MainController mainController;
     public UserInterface(){
         drivers = new DriverController();
-        rounds = new RoundController();
+        roundsController = new RoundController();
+        mainController = new MainController();
     }
 
     public void start(){
@@ -58,8 +61,8 @@ public class UserInterface {
             System.exit(1);
         }
 
-        Round[] rounds_list = rounds.getRoundofYear(year);
-
+        Round[] rounds_list = roundsController.getRoundsofYear(year);
+        roundsController.setRoundYear(year);
 
         try {
             System.out.println("Write the number of the race you want to check: ");
@@ -79,6 +82,8 @@ public class UserInterface {
             input1.close();
             System.exit(1);
         }
+
+        mainController.setRaceNumber(number_race);
         Driver[] drivers_list = drivers.getAllDriverfromYearandRound(year, number_race);
         try {
             if(drivers_list.length != 0) {
@@ -121,23 +126,24 @@ public class UserInterface {
             System.exit(1);
         }
 
-
+        mainController.setDriver(drivers_list[name_number-1].getDriverId());
         input1.close();
+        
 
         double start = System.currentTimeMillis();
 
         LapController laps = new LapController();
         double[] lap_time_race = laps.getLapsTime(year,number_race,drivers_list[name_number-1].getDriverId());
         byte total_lap_race = laps.getTotalLaps(year,number_race);
-        // double[] www = laps.getLapsTime(1998,4,"hakkinen");
         byte lap_driven = laps.getLapsDriven();
 
-        //for(int i=0; i<iii.length;i++){
-        //    System.out.println(iii[i]) ;
-        //}
+        Driver[] eee = roundsController.round.getDriver();
 
+        for(int i = 0; i < eee.length; i++){
+            System.out.println(eee[i].getDriverId());
+        }
         Chart d = new Chart();
-        d.createChart(lap_time_race,lap_driven,total_lap_race);
+       // d.createChart(lap_time_race,lap_driven,total_lap_race);
 
         double end = System.currentTimeMillis();
         double duration_time = end - start;

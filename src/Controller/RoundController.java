@@ -8,12 +8,13 @@ import org.json.JSONObject;
 
 public class RoundController {
 
-    private Round round;
+    public Round round;
     public RoundController(){
         round = new Round();
     }
 
-    public Round[] getRoundofYear(short year){
+    //Visualize all the GP in a specific year
+    public Round[] getRoundsofYear(short year){
 
         String ergast_url="https://ergast.com/api/f1/"+year+".json";
         String data_json= GetData.getJsondata(ergast_url);
@@ -21,7 +22,6 @@ public class RoundController {
         Round[] Rounds_array = new Round[total];
 
         try {
-
             JSONObject obj = new JSONObject(data_json);
             JSONObject objMRData = obj.getJSONObject("MRData");
             JSONObject objDriverTable = objMRData.getJSONObject("RaceTable");
@@ -46,5 +46,16 @@ public class RoundController {
         return Rounds_array;
     }
 
+    public void setRoundYear(short year_round){
+        this.round.setYearRounds(year_round);
+    }
+
+    public void setRaceNumber(byte n_round){
+        this.round.setN_round(n_round);
+    }
+
+    public void setDriver(String driverId){
+        this.round.setDriver(driverId);
+    }
 
 }
