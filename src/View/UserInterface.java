@@ -137,13 +137,9 @@ public class UserInterface {
         byte total_lap_race = laps.getTotalLaps(year,number_race);
         byte lap_driven = laps.getLapsDriven();
 
-        Driver[] eee = roundsController.round.getDriver();
-
-        for(int i = 0; i < eee.length; i++){
-            System.out.println(eee[i].getDriverId());
-        }
+       
         Chart d = new Chart();
-       // d.createChart(lap_time_race,lap_driven,total_lap_race);
+        d.createChart(lap_time_race,lap_driven,total_lap_race);
 
         double end = System.currentTimeMillis();
         double duration_time = end - start;

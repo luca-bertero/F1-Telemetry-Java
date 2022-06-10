@@ -16,14 +16,22 @@ import java.nio.charset.StandardCharsets;
 public class GetData {
 
     private String ergast_url = "";
+    private static String json_data;
+    private static GetData instance = null;
 
 
-    public GetData() {
+    private GetData() {
 
     }
 
+    public static GetData get() {
+        if (instance == null)
+            instance = new GetData();
+  
+        return instance;
+    }
 
-    public static String getJsondata(String url){
+    public String getJsondata(String url){
 
         //StringBuilder sb = new StringBuilder();
         String result = "";
@@ -53,6 +61,7 @@ public class GetData {
                 a++;
             }
             rd.close();*/
+            json_data = result;
             return result;
 
 
@@ -88,7 +97,7 @@ public class GetData {
 
 
 
-    public static int getTotalRecords(String data_json) {
+    public int getTotalRecords(String data_json) {
         int n_results=0;
         try {
 
@@ -122,7 +131,6 @@ public class GetData {
                 String url = objConstructors.getString("url");
                 System.out.println(constructorId + ": " + name + " " + nationality + " " + url);
             }
-            String xlm = objMRData.getString("xmlns");
             System.out.println(obj);
 
         } catch (Exception e) {
@@ -130,26 +138,6 @@ public class GetData {
         }
     }
 
-    public void getSeasonData(String Season) {
-
-        try {
-            JSONObject obj = new JSONObject(Season);
-            JSONObject objMRData = obj.getJSONObject("MRData");
-            JSONObject objSeasonTable = objMRData.getJSONObject("SeasonTable");
-            JSONArray arraySeason = objSeasonTable.getJSONArray("Seasons");
-            for (int i = 0; i < arraySeason.length(); i++) {
-                JSONObject objSeason = arraySeason.getJSONObject(i);
-                String season = objSeason.getString("season");
-                String url = objSeason.getString("url");
-                System.out.println(season + ": " + url);
-            }
-            String xlm = objMRData.getString("xmlns");
-            System.out.println(obj);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
 
     public void getDataCircuits(String Driver) {
         try {
@@ -203,33 +191,7 @@ public class GetData {
         }
     }
 
-    public void getQualifyingData(String RaceInfo) {
-        try {
-
-            JSONObject obj = new JSONObject(RaceInfo);
-            JSONObject objMRData = obj.getJSONObject("MRData");
-            JSONObject objRaceTable = objMRData.getJSONObject("RaceTable");
-            JSONArray arrayQualifyingResults = objRaceTable.getJSONArray("QualifyingResults");
-            for (int i = 0; i < arrayQualifyingResults.length(); i++) {
-                JSONObject objQualifyingResults = arrayQualifyingResults.getJSONObject(i);
-                String position = objQualifyingResults.getString("position");
-                JSONObject Driver = objQualifyingResults.getJSONObject("Driver");
-                String Drivername = Driver.getString("familyName");
-                String Code = Driver.getString("code");
-                String q1 = objQualifyingResults.getString("q1");
-                String q2 = objQualifyingResults.getString("q2");
-                String q3 = objQualifyingResults.getString("q3");
-                String date = objRaceTable.getString("date");
-                String time = objRaceTable.getString("time");
-                System.out.println(position + ": " + Drivername + " " + date + " " + time + " " + Code + " " + q1 + " " + q2 + " " + q3);
-            }
-            String xlm = objMRData.getString("xmlns");
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
+    
 
     public double[] getLapsTime(String Laps) {
         String time="";
@@ -270,7 +232,6 @@ public class GetData {
 
     public int converter(String LapTime){
         String[] min = LapTime.split(":");
-        String minf = min[1];
         String[] sec = min[1].split("\\.");
         int minuto = Integer.parseInt(min[0]);
         int secondi = Integer.parseInt(sec[0]);
@@ -280,12 +241,5 @@ public class GetData {
 
     }
 
-    public int[] storeData(int data){
-        int[] data22 = new int[70];
-        for(int i=0; i<data22.length; i++){
-            data22[i]=data;
-        }
-        return data22;
-    }
 }
 

@@ -15,9 +15,10 @@ public class DriverController {
 
     public Driver[] getAllDriverfromYear(int year){
 
+        GetData data = GetData.get();
         String ergast_url="https://ergast.com/api/f1/"+year+"/drivers.json";
-        String data_json= GetData.getJsondata(ergast_url);
-        int total = GetData.getTotalRecords(data_json);
+        String data_json= data.getJsondata(ergast_url);
+        int total = data.getTotalRecords(data_json);
         Driver[] Driver_array = new Driver[total];
 
         try {
@@ -67,9 +68,10 @@ public class DriverController {
 
     public Driver[] getAllDriverfromYearandRound(short year, byte round){
 
+        GetData data = GetData.get();
         String ergast_url="https://ergast.com/api/f1/"+year+"/"+round+"/drivers.json";
-        String data_json= GetData.getJsondata(ergast_url);
-        int total = GetData.getTotalRecords(data_json);
+        String data_json= data.getJsondata(ergast_url);
+        int total = data.getTotalRecords(data_json);
         Driver[] Driver_array = new Driver[total];
 
         try {

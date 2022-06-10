@@ -16,9 +16,10 @@ public class RoundController {
     //Visualize all the GP in a specific year
     public Round[] getRoundsofYear(short year){
 
+        GetData data = GetData.get();
         String ergast_url="https://ergast.com/api/f1/"+year+".json";
-        String data_json= GetData.getJsondata(ergast_url);
-        int total = GetData.getTotalRecords(data_json);
+        String data_json= data.getJsondata(ergast_url);
+        int total = data.getTotalRecords(data_json);
         Round[] Rounds_array = new Round[total];
 
         try {

@@ -3,7 +3,7 @@ package Model;
 public class Lap {
 
     private byte lap_driven=0;
-    private byte lap_number;
+    private byte total_lap_race;
     private double[] lap_time_race;
     //public ArrayList<Integer> giro = new ArrayList<Integer>();
 
@@ -24,8 +24,8 @@ public class Lap {
         this.lap_time_race[index] = single_value;
     }
 
-    public void setLapNumber(byte lap_number){
-        this.lap_number = lap_number;
+    public void setTotalLapNumber(byte total_lap_race){
+        this.total_lap_race = total_lap_race;
     }
 
     public byte getLapDriven() {
@@ -33,8 +33,8 @@ public class Lap {
     }
 
 
-    public byte getLapNumber(){
-        return lap_number;
+    public byte getTotalLapNumber(){
+        return total_lap_race;
     }
 
     public double[] getLapTimeRace() { return lap_time_race;}

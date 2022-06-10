@@ -13,11 +13,11 @@ public class LapController {
     }
 
     public double[] getLapsTime(short year,byte round,String driver) {
-        String time="";
-
-        String ergast_url="https://ergast.com/api/f1/"+year+"/"+round+"/drivers/"+driver+"/laps.json?limit=100";
-        String data_json=GetData.getJsondata(ergast_url);
-        int total = GetData.getTotalRecords(data_json);
+        String time = "";
+        GetData data = GetData.get();
+        String ergast_url="https://ergast.com/api/f1/" + year + "/" + round + "/drivers/" + driver + "/laps.json?limit=100";
+        String data_json=data.getJsondata(ergast_url);
+        int total = data.getTotalRecords(data_json);
 
         laps.setLapTimeRace(new double[total]); //initialize an empty array with total laps lenght
         try {
@@ -31,7 +31,7 @@ public class LapController {
                 JSONArray laps_array = objLapsResults.getJSONArray("Laps");
                 for (int j = 0; j < laps_array.length(); j++) {
                     JSONObject objLaps = laps_array.getJSONObject(j);
-                    laps.setLapNumber(Byte.parseByte(objLaps.getString("number")));
+                    laps.setTotalLapNumber(Byte.parseByte(objLaps.getString("number")));
                     JSONArray Timings = objLaps.getJSONArray("Timings");
                     for (int k = 0; k < Timings.length(); k++){
                         JSONObject objTimingsResults = Timings.getJSONObject(k);
@@ -68,9 +68,10 @@ public class LapController {
     }
 
     public byte getTotalLaps(short year,byte race_number) {
-        String url="http://ergast.com/api/f1/"+year+"/"+race_number+"/results/1.json";
-        String json_data= GetData.getJsondata(url);
-        byte n_results=0;
+        GetData data = GetData.get();
+        String url = "http://ergast.com/api/f1/" + year + "/" + race_number + "/results/1.json";
+        String json_data = data.getJsondata(url);
+        byte n_results = 0;
         String total_lap = "";
         try {
 
@@ -86,7 +87,8 @@ public class LapController {
                     total_lap = objLapsTotal.getString("laps");
                 }
             }
-            n_results=Byte.parseByte(total_lap);
+
+            n_results = Byte.parseByte(total_lap);
 
         } catch (Exception e) {
             System.out.println(e);
