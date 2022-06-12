@@ -8,20 +8,21 @@ public class GetLapData{
 
 
     private String json_data;
+    private GetData data;
     private byte lap_driven=0;
     private byte lap_number;
     private double[] lap_time_race;
 
     public GetLapData(){
+        this.data = GetData.get();
 
     }
 
     public double[] getLapsTime(short year,byte round,String driver) {
         String time="";
-        GetData data = GetData.get();
 
-        String ergast_url="https://ergast.com/api/f1/"+year+"/"+round+"/drivers/"+driver+"/laps.json?limit=100";
-        String data_json=data.getJsondata(ergast_url);
+        String ergast_url = "https://ergast.com/api/f1/"+year+"/"+round+"/drivers/"+driver+"/laps.json?limit=100";
+        String data_json = data.getJsondata(ergast_url);
         int total = data.getTotalRecords(data_json);
 
         lap_time_race = new double[total];
