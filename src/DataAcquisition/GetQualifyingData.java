@@ -4,10 +4,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GetQualifyingData {
-    
+
+    private GetData data;
+
+    public GetQualifyingData() {
+        this.data = GetData.get();
+    }
 
     public void getQualifyingData(String RaceInfo) {
-        
+
         try {
 
             JSONObject obj = new JSONObject(RaceInfo);
@@ -25,7 +30,8 @@ public class GetQualifyingData {
                 String q3 = objQualifyingResults.getString("q3");
                 String date = objRaceTable.getString("date");
                 String time = objRaceTable.getString("time");
-                System.out.println(position + ": " + Drivername + " " + date + " " + time + " " + Code + " " + q1 + " " + q2 + " " + q3);
+                System.out.println(position + ": " + Drivername + " " + date + " " + time + " " + Code + " " + q1 + " "
+                        + q2 + " " + q3);
             }
             String xlm = objMRData.getString("xmlns");
 
@@ -33,6 +39,5 @@ public class GetQualifyingData {
             System.out.println(e);
         }
     }
-
 
 }

@@ -9,16 +9,17 @@ import org.json.JSONObject;
 public class RoundController {
 
     public Round round;
-    public RoundController(){
+
+    public RoundController() {
         round = new Round();
     }
 
-    //Visualize all the GP in a specific year
-    public Round[] getRoundsofYear(short year){
+    // Visualize all the GP in a specific year
+    public Round[] getRoundsofYear(short year) {
 
         GetData data = GetData.get();
-        String ergast_url="https://ergast.com/api/f1/"+year+".json";
-        String data_json= data.getJsondata(ergast_url);
+        String ergast_url = "https://ergast.com/api/f1/" + year + ".json";
+        String data_json = data.getJsondata(ergast_url);
         int total = data.getTotalRecords(data_json);
         Round[] Rounds_array = new Round[total];
 
@@ -35,27 +36,26 @@ public class RoundController {
                 single_round.setUrl(objDriver.getString("url"));
                 single_round.setRaceName(objDriver.getString("raceName"));
 
-                Rounds_array[i]=single_round;
+                Rounds_array[i] = single_round;
             }
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println("Not valid Json " + e);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Rounds_array;
     }
 
-    public void setRoundYear(short year_round){
+    public void setRoundYear(short year_round) {
         this.round.setYearRounds(year_round);
     }
 
-    public void setRaceNumber(byte n_round){
+    public void setRaceNumber(byte n_round) {
         this.round.setN_round(n_round);
     }
 
-    public void setDriver(String driverId){
+    public void setDriver(String driverId) {
         this.round.setDriver(driverId);
     }
 

@@ -1,7 +1,6 @@
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.HashMap;
 
 public class Drivers {
 
@@ -14,15 +13,14 @@ public class Drivers {
     private String dateOfBirth;
     private String nationality;
 
-    public Drivers(){
+    public Drivers() {
 
     }
 
+    public static Drivers[] getAllDriverfromYear(int year) {
 
-    public static Drivers[] getAllDriverfromYear(int year){
-
-        String ergast_url="https://ergast.com/api/f1/"+year+"/drivers.json";
-        String data_json=GetData.getJsondata(ergast_url);
+        String ergast_url = "https://ergast.com/api/f1/" + year + "/drivers.json";
+        String data_json = GetData.getJsondata(ergast_url);
         int total = GetData.getTotalRecords(data_json);
         Drivers[] Driver_array = new Drivers[total];
 
@@ -38,16 +36,14 @@ public class Drivers {
                 single_driver.driverId = objDriver.getString("driverId");
                 if (!objDriver.isNull("code")) {
                     single_driver.code = objDriver.getString("code");
-                }
-                else{
+                } else {
                     single_driver.code = "";
                 }
 
                 if (!objDriver.isNull("permanentNumber")) {
                     single_driver.permanentNumber = objDriver.getString("permanentNumber");
 
-                }
-                else{
+                } else {
                     single_driver.permanentNumber = "";
                 }
 
@@ -57,24 +53,23 @@ public class Drivers {
                 single_driver.dateOfBirth = objDriver.getString("dateOfBirth");
                 single_driver.url = objDriver.getString("url");
 
-                Driver_array[i]=single_driver;
+                Driver_array[i] = single_driver;
             }
 
             return Driver_array;
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println("Not valid Json " + e);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return null;
     }
 
-    public static Drivers[] getAllDriverfromYearandRound(short year,byte round){
+    public static Drivers[] getAllDriverfromYearandRound(short year, byte round) {
 
-        String ergast_url="https://ergast.com/api/f1/"+year+"/"+round+"/drivers.json";
-        String data_json=GetData.getJsondata(ergast_url);
+        String ergast_url = "https://ergast.com/api/f1/" + year + "/" + round + "/drivers.json";
+        String data_json = GetData.getJsondata(ergast_url);
         int total = GetData.getTotalRecords(data_json);
         Drivers[] Driver_array = new Drivers[total];
 
@@ -90,16 +85,14 @@ public class Drivers {
                 single_driver.driverId = objDriver.getString("driverId");
                 if (!objDriver.isNull("code")) {
                     single_driver.code = objDriver.getString("code");
-                }
-                else{
+                } else {
                     single_driver.code = "";
                 }
 
                 if (!objDriver.isNull("permanentNumber")) {
                     single_driver.permanentNumber = objDriver.getString("permanentNumber");
 
-                }
-                else{
+                } else {
                     single_driver.permanentNumber = "";
                 }
 
@@ -109,23 +102,22 @@ public class Drivers {
                 single_driver.dateOfBirth = objDriver.getString("dateOfBirth");
                 single_driver.url = objDriver.getString("url");
 
-                Driver_array[i]=single_driver;
+                Driver_array[i] = single_driver;
             }
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println("Not valid Json " + e);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Driver_array;
     }
 
-    public String getDriverId(){
+    public String getDriverId() {
         return driverId;
     }
 
-    public String getPermanentNumber(){
+    public String getPermanentNumber() {
         return permanentNumber;
     }
 
@@ -137,19 +129,19 @@ public class Drivers {
         return url;
     }
 
-    public String getGivenName(){
+    public String getGivenName() {
         return givenName;
     }
 
-    public String getFamilyName(){
+    public String getFamilyName() {
         return familyName;
     }
 
-    public String getDateOfBirth(){
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public String getNationality(){
+    public String getNationality() {
         return nationality;
     }
 

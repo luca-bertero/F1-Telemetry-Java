@@ -4,7 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GetSeasonData {
-    
+
+    private GetData data;
+
+    public GetSeasonData() {
+        this.data = GetData.get();
+    }
+
     public void getSeasonData(String Season) {
 
         try {

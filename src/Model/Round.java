@@ -12,7 +12,7 @@ public class Round {
     private String url;
     private String RaceName;
 
-    public Round(){
+    public Round() {
 
     }
 
@@ -35,17 +35,30 @@ public class Round {
     public void setDriver(String... driverId) {
         drivers = new Driver[driverId.length];
         System.out.println(driverId.length);
-        for(int i = 0; i < driverId.length; i++){
+        for (int i = 0; i < driverId.length; i++) {
             drivers[i] = new Driver(driverId[i]);
             System.out.println(drivers[i].getDriverId());
 
         }
     }
 
+    public byte getN_round() {
+        return n_round;
+    }
 
-    public byte getN_round(){return n_round;}
-    public short getYearRound(){return year_round;}
-    public String getRaceName() { return RaceName;}
-    public String getUrl() {return url;}
-    public Driver[] getDriver() { return drivers; }
+    public short getYearRound() {
+        return year_round;
+    }
+
+    public String getRaceName() {
+        return RaceName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Driver[] getDriver() {
+        return drivers;
+    }
 }

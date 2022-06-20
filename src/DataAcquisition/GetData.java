@@ -12,13 +12,11 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
-
 public class GetData {
 
     private String ergast_url = "";
     private static String json_data;
     private static GetData instance = null;
-
 
     private GetData() {
 
@@ -27,57 +25,55 @@ public class GetData {
     public static GetData get() {
         if (instance == null)
             instance = new GetData();
-  
+
         return instance;
     }
 
-    public String getJsondata(String url){
+    public String getJsondata(String url) {
 
-        //StringBuilder sb = new StringBuilder();
+        // StringBuilder sb = new StringBuilder();
         String result = "";
-        //StringBuilder sbt = new StringBuilder();
+        // StringBuilder sbt = new StringBuilder();
         InputStream is = null;
         BufferedReader rd = null;
         try {
 
-            //URL connection = new URL(url);
+            // URL connection = new URL(url);
             is = new URL(url).openStream();
             rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            //System.out.print(is.available());
+            // System.out.print(is.available());
 
-            //metodo alternativo
+            // metodo alternativo
             int b = is.available();
-            //System.out.print(rd.readLine());
+            // System.out.print(rd.readLine());
             int a = 0;
             result = rd.readLine();
-            //System.out.println(result);
-            //System.out.println("miao");
-            //char c =(char)rd.read();
-            /*while (rd.read() != 0) {
-                 //c =rd.read();
-                sb.append((char)rd.read());
-
-                //System.out.print((char) rd.read());
-                a++;
-            }
-            rd.close();*/
+            // System.out.println(result);
+            // System.out.println("miao");
+            // char c =(char)rd.read();
+            /*
+             * while (rd.read() != 0) {
+             * //c =rd.read();
+             * sb.append((char)rd.read());
+             * 
+             * //System.out.print((char) rd.read());
+             * a++;
+             * }
+             * rd.close();
+             */
             json_data = result;
             return result;
 
-
-        } catch(UnknownHostException e){
+        } catch (UnknownHostException e) {
             System.out.println("Connection failure: " + e);
             System.exit(1);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             System.out.println("Bad Request " + e);
             System.exit(1);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             System.exit(1);
-        }
-        finally{
+        } finally {
             if (is != null && rd != null) {
                 try {
                     rd.close();
@@ -89,32 +85,28 @@ public class GetData {
 
         }
 
-        //String b = sb.toString();
-        //System.out.println(b);
+        // String b = sb.toString();
+        // System.out.println(b);
         return null;
 
     }
 
-
-
     public int getTotalRecords(String data_json) {
-        int n_results=0;
+        int n_results = 0;
         try {
 
             JSONObject obj = new JSONObject(data_json);
             JSONObject objMRData = obj.getJSONObject("MRData");
             String total_result = objMRData.getString("total");
-            n_results=Integer.parseInt(total_result);
+            n_results = Integer.parseInt(total_result);
 
         } catch (JSONException e) {
-            System.out.println("No valid Json "+e);
-        }
-        catch (Exception e) {
+            System.out.println("No valid Json " + e);
+        } catch (Exception e) {
             System.out.println(e);
         }
         return n_results;
     }
-
 
     public void getConstructorData(String Constructor) {
 
@@ -138,7 +130,6 @@ public class GetData {
         }
     }
 
-
     public void getDataCircuits(String Driver) {
         try {
             JSONObject obj = new JSONObject(Driver);
@@ -155,7 +146,8 @@ public class GetData {
                 String locality = objLocation.getString("locality");
                 String country = objLocation.getString("country");
                 String url = objCircuit.getString("url");
-                System.out.println(circuitId + ": " + circuitName + " " + lat + " " + lon + " " + locality + " " + country + " " + url);
+                System.out.println(circuitId + ": " + circuitName + " " + lat + " " + lon + " " + locality + " "
+                        + country + " " + url);
             }
             String xlm = objMRData.getString("xmlns");
             System.out.println(obj);
@@ -191,10 +183,8 @@ public class GetData {
         }
     }
 
-    
-
     public double[] getLapsTime(String Laps) {
-        String time="";
+        String time = "";
         double[] bbb = new double[100];
         try {
             JSONObject obj = new JSONObject(Laps);
@@ -207,20 +197,20 @@ public class GetData {
                 for (int j = 0; j < laps.length(); j++) {
                     JSONObject objLaps = laps.getJSONObject(j);
                     JSONArray Timings = objLaps.getJSONArray("Timings");
-                    for (int k = 0; k < Timings.length(); k++){
+                    for (int k = 0; k < Timings.length(); k++) {
                         JSONObject objTimingsResults = Timings.getJSONObject(k);
                         time = objTimingsResults.getString("time");
-                        //System.out.println(time);
+                        // System.out.println(time);
                         int ggg = converter(time);
                         bbb[j] = ggg;
                     }
                 }
 
-                //System.out.println( position +": " + Drivername +" "+ date +" "+time+" "+Code+" "+q1+" "+q2+" "+q3);
+                // System.out.println( position +": " + Drivername +" "+ date +" "+time+"
+                // "+Code+" "+q1+" "+q2+" "+q3);
             }
             String xlm = objMRData.getString("xmlns");
-            //System.out.println(obj);
-
+            // System.out.println(obj);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -229,17 +219,15 @@ public class GetData {
         return bbb;
     }
 
-
-    public int converter(String LapTime){
+    public int converter(String LapTime) {
         String[] min = LapTime.split(":");
         String[] sec = min[1].split("\\.");
         int minuto = Integer.parseInt(min[0]);
         int secondi = Integer.parseInt(sec[0]);
         int millisecond = Integer.parseInt(sec[1]);
 
-        return (minuto*60 + secondi )*1000 + millisecond;
+        return (minuto * 60 + secondi) * 1000 + millisecond;
 
     }
 
 }
-

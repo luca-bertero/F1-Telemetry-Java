@@ -8,15 +8,15 @@ public class Rounds {
     private String url;
     private String RaceName;
 
-    public Rounds(){
+    public Rounds() {
 
     }
 
-    public static Rounds[] getRoundofYear(short year){
+    public static Rounds[] getRoundofYear(short year) {
         GetData data = GetData.get();
 
-        String ergast_url="https://ergast.com/api/f1/"+year+".json";
-        String data_json=data.getJsondata(ergast_url);
+        String ergast_url = "https://ergast.com/api/f1/" + year + ".json";
+        String data_json = data.getJsondata(ergast_url);
         int total = data.getTotalRecords(data_json);
         Rounds[] Rounds_array = new Rounds[total];
 
@@ -34,23 +34,30 @@ public class Rounds {
                 single_round.url = objDriver.getString("url");
                 single_round.RaceName = objDriver.getString("raceName");
 
-                Rounds_array[i]=single_round;
+                Rounds_array[i] = single_round;
             }
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
             System.out.println("Not valid Json " + e);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return Rounds_array;
     }
 
-    public int getN_round(){return n_round;}
-    public short getYearRound(){return year_round;}
+    public int getN_round() {
+        return n_round;
+    }
+
+    public short getYearRound() {
+        return year_round;
+    }
 
     public String getRaceName() {
         return RaceName;
     }
-    public String getUrl() {return url;}
+
+    public String getUrl() {
+        return url;
+    }
 }

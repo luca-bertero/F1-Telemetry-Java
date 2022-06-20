@@ -17,35 +17,35 @@ public class Driver {
     private String nationality;
     private Lap laps;
 
-    public Driver(){
+    public Driver() {
 
     }
 
-    public Driver(String driverid){
+    public Driver(String driverid) {
         this.driverId = driverid;
     }
 
-    public void setDriverId(String driverId){
+    public void setDriverId(String driverId) {
         this.driverId = driverId;
     }
 
-    public void setPermanentNumber(String permanentNumber){
+    public void setPermanentNumber(String permanentNumber) {
         this.permanentNumber = permanentNumber;
     }
 
-    public void setCode(String code){
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public void setUrl(String url){
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public void setGivenName(String givenName){
+    public void setGivenName(String givenName) {
         this.givenName = givenName;
     }
 
-    public void setFamilyName(String familyName){
+    public void setFamilyName(String familyName) {
         this.familyName = familyName;
     }
 
@@ -57,11 +57,11 @@ public class Driver {
         this.nationality = nationality;
     }
 
-    public String getDriverId(){
+    public String getDriverId() {
         return driverId;
     }
 
-    public String getPermanentNumber(){
+    public String getPermanentNumber() {
         return permanentNumber;
     }
 
@@ -73,19 +73,19 @@ public class Driver {
         return url;
     }
 
-    public String getGivenName(){
+    public String getGivenName() {
         return givenName;
     }
 
-    public String getFamilyName(){
+    public String getFamilyName() {
         return familyName;
     }
 
-    public String getDateOfBirth(){
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public String getNationality(){
+    public String getNationality() {
         return nationality;
     }
 
