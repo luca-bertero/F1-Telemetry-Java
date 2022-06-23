@@ -8,9 +8,11 @@ import Model.Driver;
 import Model.Lap;
 import Model.Round;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -135,13 +137,75 @@ public class UserInterface {
         double start = System.currentTimeMillis();
 
         LapController laps = new LapController();
+        LapController laps1 = new LapController();
+        LapController laps2 = new LapController();
+        LapController laps3 = new LapController();
+        LapController laps4 = new LapController();
+        LapController laps5 = new LapController();
+        LapController laps6 = new LapController();
+        LapController laps7 = new LapController();
+        LapController laps8 = new LapController();
+        LapController laps9 = new LapController();
+        LapController laps10 = new LapController();
+
         double[] lap_time_race = laps.getLapsTime(year, number_race, drivers_list[name_number - 1].getDriverId());
+        double[] lap_time_race2 = laps1.getLapsTime(year, number_race, drivers_list[name_number].getDriverId());
+        double[] lap_time_race3 = laps2.getLapsTime(year, number_race, drivers_list[name_number + 1].getDriverId());
+        double[] lap_time_race4 = laps3.getLapsTime(year, number_race, drivers_list[name_number + 2].getDriverId());
+        double[] lap_time_race5 = laps4.getLapsTime(year, number_race, drivers_list[name_number + 3].getDriverId());
+        double[] lap_time_race6 = laps5.getLapsTime(year, number_race, drivers_list[name_number + 4].getDriverId());
+        double[] lap_time_race7 = laps6.getLapsTime(year, number_race, drivers_list[name_number + 5].getDriverId());
+        double[] lap_time_race8 = laps7.getLapsTime(year, number_race, drivers_list[name_number + 6].getDriverId());
+        double[] lap_time_race9 = laps8.getLapsTime(year, number_race, drivers_list[name_number + 7].getDriverId());
+        double[] lap_time_race10 = laps9.getLapsTime(year, number_race, drivers_list[name_number + 8].getDriverId());
+        double[] lap_time_race11 = laps10.getLapsTime(year, number_race, drivers_list[name_number + 9].getDriverId());
+
         byte total_lap_race = laps.getTotalLaps(year, number_race);
+
         byte lap_driven = laps.getLapsDriven();
+        byte lap_driven1 = laps1.getLapsDriven();
+        byte lap_driven2 = laps2.getLapsDriven();
+        byte lap_driven3 = laps3.getLapsDriven();
+        byte lap_driven4 = laps4.getLapsDriven();
+        byte lap_driven5 = laps5.getLapsDriven();
+        byte lap_driven6 = laps6.getLapsDriven();
+        byte lap_driven7 = laps7.getLapsDriven();
+        byte lap_driven8 = laps8.getLapsDriven();
+        byte lap_driven9 = laps9.getLapsDriven();
+        byte lap_driven10 = laps10.getLapsDriven();
+
+        List<Integer> dd = new ArrayList<Integer>();
+
+        dd.add((int) lap_driven);
+        dd.add((int) lap_driven1);
+        dd.add((int) lap_driven2);
+        dd.add((int) lap_driven3);
+        dd.add((int) lap_driven4);
+        dd.add((int) lap_driven5);
+        dd.add((int) lap_driven6);
+        dd.add((int) lap_driven7);
+        dd.add((int) lap_driven8);
+        dd.add((int) lap_driven9);
+        dd.add((int) lap_driven10);
+
         Lap lll = new Lap(lap_driven, total_lap_race, lap_time_race);
         Chart d = new Chart();
         // d.createChart(lap_time_race, lap_driven, total_lap_race);
-        d.createChart(lll);
+        // d.createChart(lll);
+        List<double[]> pp = new ArrayList<double[]>();
+        pp.add(lap_time_race);
+        pp.add(lap_time_race2);
+        pp.add(lap_time_race3);
+        pp.add(lap_time_race4);
+        pp.add(lap_time_race5);
+        pp.add(lap_time_race6);
+        pp.add(lap_time_race7);
+        pp.add(lap_time_race8);
+        pp.add(lap_time_race9);
+        pp.add(lap_time_race10);
+        pp.add(lap_time_race11);
+
+        d.MultipleChart(pp, dd, 34, total_lap_race);
 
         double end = System.currentTimeMillis();
         double duration_time = end - start;

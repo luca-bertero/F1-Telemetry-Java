@@ -77,7 +77,7 @@ public class Chart {
 
     }
 
-    public void MultipleChart(List<double[]> ydata, int n_elements, int total_lap) {
+    public void MultipleChart(List<double[]> ydata, List<Integer> elem, int n_elements, int total_lap) {
 
         seriesName = new String[ydata.size()];
         for (int i = 0; i < ydata.size(); i++) {
@@ -96,7 +96,8 @@ public class Chart {
         int med_lap_int = (int) med_lap;
 
         for (int i = 0; i < ydata.size(); i++) {
-            y_formatted.add(setYData(ydata.get(i), med_lap_int, n_elements, total_lap));
+            System.out.println(ydata.get(i).length);
+            y_formatted.add(setYData(ydata.get(i), med_lap_int, ydata.get(i).length, total_lap));
         }
 
         // double[] y_data_chart = setYData(ydata,med_lap_int,n_elements,total_lap);
@@ -129,7 +130,7 @@ public class Chart {
         chart.getStyler().setYAxisMin(min_y_value_formatted); // set min Y value
 
         for (int i = 0; i < y_formatted.size(); i++) {
-            chart.addSeries(seriesName[i], y_formatted.get(i));
+            chart.addSeries(seriesName[i], x_data, y_formatted.get(i));
 
         }
         // Show it
